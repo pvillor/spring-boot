@@ -32,6 +32,7 @@ public class Transaction {
   private float value;
 
   @CreationTimestamp
+  @Column(updatable = false)
   private Date date;
 
   public Transaction() {

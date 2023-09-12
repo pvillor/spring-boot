@@ -29,7 +29,7 @@ public class User {
     @Column(length = 6, nullable = false)
     private String type;
 
-    @Column(columnDefinition = "DECIMAL DEFAUTL 0.0")
+    @Column(columnDefinition = "DECIMAL DEFAULT 0.0")
     private float balance;
 
     public User() {
