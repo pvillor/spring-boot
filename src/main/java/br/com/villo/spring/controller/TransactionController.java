@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.villo.spring.dto.CreateTransactionDto;
 import br.com.villo.spring.model.Transaction;
 import br.com.villo.spring.service.TransactionService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/transactions")
@@ -24,18 +25,18 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody final CreateTransactionDto transactionData) throws Exception {
+    public ResponseEntity<Transaction> createTransaction(@Valid @RequestBody final CreateTransactionDto transactionData) {
 
         final Transaction createdTransaction = transactionService.createTransaction(transactionData);
 
-        return new ResponseEntity<Transaction>(createdTransaction, HttpStatus.CREATED);
+        return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Transaction> retrieveTransaction(@PathVariable final String id) throws Exception {
+    public ResponseEntity<Transaction> retrieveTransaction(@PathVariable final String id) {
 
         final Transaction transaction = transactionService.retrieveTransaction(Long.parseLong(id));
 
-        return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
+        return new ResponseEntity<>(transaction, HttpStatus.OK);
     }
 }

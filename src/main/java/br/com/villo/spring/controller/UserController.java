@@ -17,6 +17,7 @@ import br.com.villo.spring.dto.CreateDepositDto;
 import br.com.villo.spring.dto.UserDto;
 import br.com.villo.spring.model.User;
 import br.com.villo.spring.service.UserService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -28,48 +29,48 @@ public class UserController {
   }
 
   @PostMapping
-  public ResponseEntity<User> createUser(@RequestBody final UserDto userData) {
+  public ResponseEntity<User> createUser(@Valid @RequestBody final UserDto userData) {
     final User createdUser = userService.createUser(userData);
 
-    return new ResponseEntity<User>(createdUser, HttpStatus.CREATED);
+    return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
   }
 
   @GetMapping
   public ResponseEntity<List<User>> readUsers() {
     final List<User> allUsers = userService.readUsers();
 
-    return new ResponseEntity<List<User>>(allUsers, HttpStatus.OK);
+    return new ResponseEntity<>(allUsers, HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<User> retrieveUser(@PathVariable String id) throws Exception {
+  public ResponseEntity<User> retrieveUser(@PathVariable String id) {
 
     final User user = userService.retrieveUser(Long.parseLong(id));
 
-    return new ResponseEntity<User>(user, HttpStatus.OK);
+    return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<User> updateUser(@RequestBody final UserDto userData, @PathVariable String id) throws Exception {
+  public ResponseEntity<User> updateUser(@Valid @RequestBody final UserDto userData, @PathVariable String id) {
 
     final User updatedUser = userService.updateUser(userData, Long.parseLong(id));
 
-    return new ResponseEntity<User>(updatedUser, HttpStatus.OK);
+    return new ResponseEntity<>(updatedUser, HttpStatus.OK);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteUser(@PathVariable String id) throws Exception {
+  public ResponseEntity<Void> deleteUser(@PathVariable String id) {
 
     userService.deleteUser(Long.parseLong(id));
 
-    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   @PostMapping("/{id}/deposit")
-  public ResponseEntity<User> updateUser(@RequestBody final CreateDepositDto depositData, @PathVariable String id) throws Exception {
+  public ResponseEntity<User> updateUser(@Valid @RequestBody final CreateDepositDto depositData, @PathVariable String id) {
 
     final User depositedUser = userService.createDeposit(depositData, Long.parseLong(id));
 
-    return new ResponseEntity<User>(depositedUser, HttpStatus.CREATED);
+    return new ResponseEntity<>(depositedUser, HttpStatus.CREATED);
   }
 }
